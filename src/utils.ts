@@ -14,7 +14,13 @@ import process from "node:process";
 import { createInterface } from "node:readline/promises";
 import type { CliOptions, ProviderId } from "./types.js";
 
-const AGENT_IDS: ProviderId[] = ["claude-code", "codex", "copilot", "gemini"];
+const AGENT_IDS: ProviderId[] = [
+  "claude-code",
+  "codex",
+  "copilot",
+  "gemini",
+  "opencode",
+];
 
 export async function ensureDirectory(path: string): Promise<void> {
   await mkdir(path, { recursive: true });

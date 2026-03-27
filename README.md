@@ -10,6 +10,7 @@ Built for:
 - [Codex](https://github.com/openai/codex)
 - [GitHub Copilot CLI](https://github.com/github/copilot-cli)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [Opencode](https://github.com/anomalyco/opencode)
 
 Requires Node 18 or newer.
 
@@ -92,11 +93,12 @@ The CLI focuses on cleanup that is both useful and safe to preview:
 | Codex | `codex` | `~/.codex/state_*.sqlite`, `~/.codex/logs_*.sqlite`, `~/.codex/history.jsonl`, `~/.codex/shell_snapshots` |
 | GitHub Copilot CLI | `copilot` | `~/.copilot/session-state`, `~/.copilot/logs/session-*`, platform-specific VS Code globalStorage metadata |
 | Gemini CLI | `gemini` | `~/.gemini/tmp`, `~/.gemini/history`, `~/.gemini/projects.json` |
+| Opencode | `opencode` | `~/.local/share/opencode/opencode.db`, `~/.local/share/opencode/storage`, `~/.local/share/opencode/snapshot` |
 
 ## Behavior
 
 - `--older-than-days` defaults to `45`.
-- Omitting `--agent` scans all supported tools: `claude-code`, `codex`, `copilot`, and `gemini`.
+- Omitting `--agent` scans all supported tools: `claude-code`, `codex`, `copilot`, `gemini`, and `opencode`.
 - `--agent` is the primary public flag. `--provider` is still supported as a compatibility alias.
 - `--ignore-project` ignores matching project names or paths with a case-insensitive substring match. Repeat it to ignore multiple projects.
 - `--larger-than` filters candidates by measurable reclaimable size, using values like `500KB`, `1MB`, or `2GiB`.
@@ -124,4 +126,5 @@ The CLI focuses on cleanup that is both useful and safe to preview:
 - Copilot cleanup intentionally avoids deleting VS Code `workspaceStorage`, because that data is shared with other extensions.
 - Gemini project roots are recovered from both `~/.gemini/tmp/*/.project_root` and `~/.gemini/history/*/.project_root`, then matched to hashed temp directories.
 - Gemini orphaned-project cleanup also removes matching entries from `~/.gemini/projects.json`.
+- Opencode cleanup removes matching SQLite rows from `~/.local/share/opencode/opencode.db` plus mapped session/project files under `storage` and `snapshot`. SQLite file sizes may not shrink immediately without a later `VACUUM`.
 - Some provider-owned files are intentionally skipped when they cannot be mapped safely to a previewable session or project candidate.

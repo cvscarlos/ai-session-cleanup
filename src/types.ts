@@ -1,4 +1,9 @@
-export type ProviderId = "claude-code" | "codex" | "copilot" | "gemini";
+export type ProviderId =
+  | "claude-code"
+  | "codex"
+  | "copilot"
+  | "gemini"
+  | "opencode";
 
 export interface CliOptions {
   compactSqlite: boolean;
