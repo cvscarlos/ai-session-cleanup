@@ -500,12 +500,12 @@ function normalizeProjectMatchValue(value: string | null | undefined): string {
 export function printHelpAndExit(): never {
   process.stdout.write(
     [
-      "ai-session-cleanup",
+      "ai-session-cleaner",
       "",
       "Inspect and clean local AI agent session data.",
       "",
       "Usage:",
-      "  ai-session-cleanup [--older-than-days 45] [--agent claude-code,codex] [--safe-run]",
+      "  ai-session-cleaner [--older-than-days 45] [--agent claude-code,codex] [--safe-run]",
       "",
       "Options:",
       "  --older-than-days <days>  Delete sessions older than this many days (default: 45)",

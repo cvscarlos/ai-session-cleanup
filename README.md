@@ -1,8 +1,8 @@
-# ai-session-cleanup
+# AI Session Cleaner
 
 Keep local AI agent session data tidy across the CLIs you already use.
 
-`ai-session-cleanup` is a terminal-first cleanup tool for multi-agent developers. It scans agent-specific session stores, shows exactly what would be removed, and lets you apply the same cleanup from one command.
+`ai-session-cleaner` is a terminal-first cleanup tool for multi-agent developers. It scans agent-specific session stores, shows exactly what would be removed, and lets you apply the same cleanup from one command.
 
 Built for:
 
@@ -27,38 +27,38 @@ Run instantly with `npx`:
 
 ```bash
 # preview everything older than 45 days across all supported tools
-npx ai-session-cleanup --safe-run
+npx ai-session-cleaner --safe-run
 
 # apply interactively
-npx ai-session-cleanup
+npx ai-session-cleaner
 
 # apply without prompts
-npx ai-session-cleanup --yes
+npx ai-session-cleaner --yes
 ```
 
 ## Examples
 
 ```bash
 # preview everything with the default settings
-npx ai-session-cleanup --safe-run
+npx ai-session-cleaner --safe-run
 
 # clean only Claude Code and Codex sessions older than 30 days
-npx ai-session-cleanup --agent claude-code,codex --older-than-days 30
+npx ai-session-cleaner --agent claude-code,codex --older-than-days 30
 
 # only match candidates with at least 1 MB of measurable reclaimable size
-npx ai-session-cleanup --safe-run --larger-than 1MB
+npx ai-session-cleaner --safe-run --larger-than 1MB
 
 # ignore any project whose name or path contains "foo-bar"
-npx ai-session-cleanup --safe-run --ignore-project foo-bar
+npx ai-session-cleaner --safe-run --ignore-project foo-bar
 
 # compact Codex SQLite databases after cleanup
-npx ai-session-cleanup --agent codex --compact-sqlite --yes
+npx ai-session-cleaner --agent codex --compact-sqlite --yes
 
 # machine-readable output for scripts
-npx ai-session-cleanup --safe-run --json
+npx ai-session-cleaner --safe-run --json
 
 # disable orphaned project detection and only use age-based cleanup
-npx ai-session-cleanup --safe-run --no-orphaned
+npx ai-session-cleaner --safe-run --no-orphaned
 ```
 
 ## Local development
