@@ -2,6 +2,7 @@ export type ProviderId =
   | "claude-code"
   | "codex"
   | "copilot"
+  | "crush"
   | "gemini"
   | "opencode";
 

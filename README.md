@@ -9,6 +9,7 @@ Built for:
 - [Claude Code](https://github.com/anthropics/claude-code)
 - [Codex](https://github.com/openai/codex)
 - [GitHub Copilot CLI](https://github.com/github/copilot-cli)
+- [Crush](https://github.com/charmbracelet/crush)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
 - [Opencode](https://github.com/anomalyco/opencode)
 
@@ -96,13 +97,14 @@ The CLI focuses on cleanup that is both useful and safe to preview:
 | Claude Code | `claude-code` | `~/.claude/projects`, `~/.claude/session-env`, `~/.claude/tasks`, `~/.claude/file-history`, `~/.claude/todos`, `~/.claude/debug`, `~/.claude.json` |
 | Codex | `codex` | `~/.codex/state_*.sqlite`, `~/.codex/logs_*.sqlite`, `~/.codex/history.jsonl`, `~/.codex/shell_snapshots` |
 | GitHub Copilot CLI | `copilot` | `~/.copilot/session-state`, `~/.copilot/logs/session-*`, platform-specific VS Code globalStorage metadata |
+| Crush | `crush` | `~/.local/share/crush/projects.json`, tracked project-local `.crush/crush.db` files, and tracked external Crush data dirs |
 | Gemini CLI | `gemini` | `~/.gemini/tmp`, `~/.gemini/history`, `~/.gemini/projects.json` |
 | Opencode | `opencode` | `~/.local/share/opencode/opencode.db`, `~/.local/share/opencode/storage`, `~/.local/share/opencode/snapshot` |
 
 ## Behavior
 
 - `--older-than-days` defaults to `45`.
-- Omitting `--agent` scans all supported tools: `claude-code`, `codex`, `copilot`, `gemini`, and `opencode`.
+- Omitting `--agent` scans all supported tools: `claude-code`, `codex`, `copilot`, `crush`, `gemini`, and `opencode`.
 - `--agent` is the primary public flag. `--provider` is still supported as a compatibility alias.
 - `--ignore-project` ignores matching project names or paths with a case-insensitive substring match. Repeat it to ignore multiple projects.
 - `--larger-than` filters candidates by measurable reclaimable size, using values like `500KB`, `1MB`, or `2GiB`.
@@ -129,6 +131,7 @@ The CLI focuses on cleanup that is both useful and safe to preview:
 - Size filtering only applies to measurable reclaimable bytes. Metadata-only items and candidates whose reclaimable size cannot be estimated remain `0 B` and will not match a positive `--larger-than` threshold.
 - Copilot metadata cleanup uses the platform-specific VS Code `globalStorage/github.copilot-chat` directory instead of assuming a macOS-only path.
 - Copilot cleanup intentionally avoids deleting VS Code `workspaceStorage`, because that data is shared with other extensions.
+- Crush cleanup reads tracked project metadata from `~/.local/share/crush/projects.json`, removes old session rows from tracked `crush.db` files, and only deletes a shared `.crush` directory when no remaining tracked project still references it.
 - Gemini project roots are recovered from both `~/.gemini/tmp/*/.project_root` and `~/.gemini/history/*/.project_root`, then matched to hashed temp directories.
 - Gemini orphaned-project cleanup also removes matching entries from `~/.gemini/projects.json`.
 - Opencode cleanup removes matching SQLite rows from `~/.local/share/opencode/opencode.db` plus mapped session/project files under `storage` and `snapshot`. SQLite file sizes may not shrink immediately without a later `VACUUM`.

@@ -19,6 +19,7 @@ const AGENT_IDS: ProviderId[] = [
   "claude-code",
   "codex",
   "copilot",
+  "crush",
   "gemini",
   "opencode",
 ];
