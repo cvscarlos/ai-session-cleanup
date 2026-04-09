@@ -232,7 +232,27 @@ export function parseDate(
     return Number.isNaN(parsed.getTime()) ? null : parsed;
   }
 
-  const parsed = new Date(value);
+  const normalized = value.trim();
+
+  if (!normalized) {
+    return null;
+  }
+
+  if (/^\d+$/u.test(normalized)) {
+    const numericValue = Number(normalized);
+
+    if (!Number.isFinite(numericValue)) {
+      return null;
+    }
+
+    const milliseconds =
+      numericValue > 1_000_000_000_000 ? numericValue : numericValue * 1000;
+    const parsed = new Date(milliseconds);
+
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  }
+
+  const parsed = new Date(normalized);
 
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }

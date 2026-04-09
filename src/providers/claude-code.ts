@@ -239,9 +239,13 @@ export const claudeCodeProvider: AgentProvider<
         const sessionFile =
           entry.fullPath ?? join(projectDir, `${sessionId}.jsonl`);
         const updatedAt =
-          parseDate(entry.modified) ??
-          parseDate(entry.fileMtime) ??
-          (await safeStat(sessionFile)) ??
+          chooseLatestDate(
+            chooseLatestDate(
+              parseDate(entry.modified),
+              parseDate(entry.fileMtime),
+            ),
+            await safeStat(sessionFile),
+          ) ??
           (await safeStat(indexPath)) ??
           new Date(0);
         const reasons = collectReasons(updatedAt, cutoffDate, projectMissing);
@@ -316,6 +320,21 @@ function collectReasons(
   }
 
   return reasons;
+}
+
+function chooseLatestDate(
+  current: Date | null,
+  candidate: Date | null,
+): Date | null {
+  if (!candidate) {
+    return current;
+  }
+
+  if (!current || candidate > current) {
+    return candidate;
+  }
+
+  return current;
 }
 
 async function buildTodoFileMap(): Promise<Map<string, string[]>> {
